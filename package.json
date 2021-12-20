@@ -2,6 +2,7 @@
     "name": "env-interactive",
     "private": true,
     "scripts": {
+        "postinstall": "husky install",
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
@@ -21,6 +22,7 @@
         "@types/react": "17.0.37",
         "eslint": "7.32.0",
         "eslint-config-next": "12.0.7",
+        "husky": "^7.0.4",
         "prettier": "^2.5.1",
         "typescript": "4.5.4"
     }
