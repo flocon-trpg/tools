@@ -1,4 +1,15 @@
-import { Alert, AlertProps, Checkbox, Form, Input, Radio, Space, Table } from 'antd';
+import {
+    Alert,
+    AlertProps,
+    Checkbox,
+    Collapse,
+    Form,
+    Image,
+    Input,
+    Radio,
+    Space,
+    Table,
+} from 'antd';
 import produce from 'immer';
 import { NextPage } from 'next';
 import React, { useCallback, useMemo, useState } from 'react';
@@ -109,6 +120,7 @@ namespace ErrorMessages {
 const staticFiles = 'staticFiles';
 const nextjs = 'nextjs';
 const headerPadding = 16;
+const collapsePadding = 12;
 
 export const WebServer: NextPage = () => {
     const [configState, setConfigState] = useState<ConfigState>({
@@ -140,10 +152,9 @@ export const WebServer: NextPage = () => {
     );
 
     const [autoWsState, setAutoWsState] = useState(true);
-    const autoWsUrl = configState.NEXT_PUBLIC_API_HTTP.replace(/^https:\/\//, 'wss://').replace(
-        /^http:\/\//,
-        'ws://'
-    );
+    const autoWsUrl = configState.NEXT_PUBLIC_API_HTTP.trim()
+        .replace(/^https:\/\//, 'wss://')
+        .replace(/^http:\/\//, 'ws://');
 
     const config = useMemo(() => {
         const config = toConfig(configState);
@@ -236,6 +247,21 @@ ${key}=${value}`;
                             );
                         })}
                     </Form>
+                    <Collapse style={{ marginTop: collapsePadding }}>
+                        <Collapse.Panel header="Firebase構成オブジェクトを確認する方法" key="1">
+                            <div>
+                                <div>
+                                    Firebase構成オブジェクトは、Firebase管理画面から歯車アイコンをクリックして「プロジェクトの設定」を開き、下の画像の赤い四角形の部分から参照できます。
+                                </div>
+                                <Image
+                                    width={400}
+                                    src="./assets/firebase-config.png"
+                                    alt="Firebase構成オブジェクト"
+                                    preview={{ mask: '拡大する' }}
+                                />
+                            </div>
+                        </Collapse.Panel>
+                    </Collapse>
                     <h2 style={{ paddingTop: headerPadding }}>
                         Firebase Authenticationで有効化したログインプロバイダ
                     </h2>
@@ -303,9 +329,34 @@ ${key}=${value}`;
                         <Alert
                             showIcon
                             type="error"
-                            message="少なくとも1つにチェックを入れる必要があります。もしログインプロバイダを1つも有効化していない場合は、少なくとも1つは有効化しなければなりません。"
+                            message="少なくとも1つにチェックを入れる必要があります。もしログインプロバイダを1つも有効化していない場合は、Firebaseの管理画面にアクセスして少なくとも1つを有効化してください。"
                         />
                     )}
+                    <Collapse style={{ marginTop: collapsePadding }}>
+                        <Collapse.Panel header="有効化したログインプロバイダを確認する方法" key="1">
+                            <div>
+                                <div>
+                                    有効化したログインプロバイダは、Firebase
+                                    Authenticationの管理画面から参照できます。公式ドキュメントに従ってサーバーをセットアップしている場合は、おそらく下の画像のようになっていると思います。この画像では「メール/パスワード」と「Google」が有効化されています。
+                                </div>
+                                <Image
+                                    width={400}
+                                    src="./assets/firebase-auth-2.png"
+                                    alt="ログインプロバイダの画像1"
+                                    preview={{ mask: '拡大する' }}
+                                />
+                                <div>
+                                    ログインプロバイダを1つも有効化していない場合は、下の画像のようになります。この場合は少なくとも1つを有効化してください。
+                                </div>
+                                <Image
+                                    width={400}
+                                    src="./assets/firebase-auth-1.png"
+                                    alt="ログインプロバイダの画像2"
+                                    preview={{ mask: '拡大する' }}
+                                />
+                            </div>
+                        </Collapse.Panel>
+                    </Collapse>
                     <h2 style={{ paddingTop: headerPadding }}>APIサーバーのURL（http, https）</h2>
                     <Form>
                         <Form.Item
@@ -405,7 +456,7 @@ ${key}=${value}`;
                         {deployType === staticFiles ? (
                             <>
                                 {
-                                    'まず、下のテキストをコピーしてenv.txtに貼り付けて保存してください。次に、そのenv.txtファイルが入っているフォルダをドラッグ＆ドロップ機能でデプロイしてください。'
+                                    'まず、下のテキストをコピーしてoutフォルダ内にあるenv.txtに貼り付けて保存してください。次に、そのenv.txtファイルが入っているoutフォルダの中身をすべてホスティングサイトにアップロードしてください（Netlifyのドラッグ＆ドロップによるデプロイを行う場合は、outフォルダをドラッグ＆ドロップしてください）。'
                                 }
                                 <Input.TextArea
                                     style={{ resize: 'none', height: 300, marginTop: 24 }}
@@ -419,7 +470,14 @@ ${key}=${value}`;
                                 <Table
                                     columns={[
                                         { title: 'キー', dataIndex: 'key', key: 'key' },
-                                        { title: '値', dataIndex: 'value', key: 'value' },
+                                        {
+                                            title: '値',
+                                            dataIndex: 'value',
+                                            key: 'value',
+                                            render: value => (
+                                                <div style={{ lineBreak: 'anywhere' }}>{value}</div>
+                                            ),
+                                        },
                                     ]}
                                     dataSource={envTableDataSource}
                                 />
