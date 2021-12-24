@@ -255,7 +255,7 @@ ${key}=${value}`;
                                 </div>
                                 <Image
                                     width={400}
-                                    src="./assets/firebase-config.png"
+                                    src="/assets/firebase-config.png"
                                     alt="Firebase構成オブジェクト"
                                     preview={{ mask: '拡大する' }}
                                 />
@@ -341,7 +341,7 @@ ${key}=${value}`;
                                 </div>
                                 <Image
                                     width={400}
-                                    src="./assets/firebase-auth-2.png"
+                                    src="/assets/firebase-auth-2.png"
                                     alt="ログインプロバイダの画像1"
                                     preview={{ mask: '拡大する' }}
                                 />
@@ -350,7 +350,7 @@ ${key}=${value}`;
                                 </div>
                                 <Image
                                     width={400}
-                                    src="./assets/firebase-auth-1.png"
+                                    src="/assets/firebase-auth-1.png"
                                     alt="ログインプロバイダの画像2"
                                     preview={{ mask: '拡大する' }}
                                 />

@@ -1,5 +1,6 @@
 import { NextPage } from 'next';
+import Link from 'next/link';
 
 export const Index: NextPage = () => {
-    return <a href="/web-server">Webサーバーの設定を作成する</a>;
+    return <Link href="/web-server">Webサーバーの設定を作成する</Link>;
 };
