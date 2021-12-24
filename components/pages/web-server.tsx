@@ -204,7 +204,7 @@ ${key}=${value}`;
                             let placeholder: string;
                             switch (key) {
                                 case apiKey:
-                                    placeholder = 'AIzaSyAMbuIvh-2FKJ7plfNbgRvUG-deQR-bxb8';
+                                    placeholder = 'exampleABCdef-1234ABcd5678-abCD-12EF';
                                     break;
                                 case authDomain:
                                     placeholder = 'my-flocon-server.firebaseapp.com';
