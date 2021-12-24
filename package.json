@@ -1,5 +1,5 @@
 {
-    "name": "env-interactive",
+    "name": "@flocon-trpg/tools",
     "private": true,
     "scripts": {
         "postinstall": "husky install",
