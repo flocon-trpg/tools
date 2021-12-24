@@ -6,6 +6,7 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
+        "export": "next export",
         "lint": "next lint",
         "prettier": "yarn prettier:base --write",
         "prettier:base": "prettier \"**/*.{ts,tsx,js,json,yml,md}\""
