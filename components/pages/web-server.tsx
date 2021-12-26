@@ -39,6 +39,7 @@ type FirebaseConfig = {
     [appId]: string;
 };
 
+const anonymous = 'anonymous';
 const email = 'email';
 const google = 'google';
 const facebook = 'facebook';
@@ -47,6 +48,7 @@ const twitter = 'twitter';
 const phone = 'phone';
 
 type AuthProviders = {
+    [anonymous]: boolean;
     [email]: boolean;
     [google]: boolean;
     [facebook]: boolean;
@@ -58,6 +60,7 @@ type AuthProviders = {
 namespace AuthProviders {
     export const isEmpty = (source: AuthProviders): boolean => {
         return (
+            !source.anonymous &&
             !source.email &&
             !source.google &&
             !source.facebook &&
@@ -87,6 +90,7 @@ const toConfig = (source: ConfigState): Config => {
         NEXT_PUBLIC_API_HTTP: source.NEXT_PUBLIC_API_HTTP,
         NEXT_PUBLIC_API_WS: source.NEXT_PUBLIC_API_WS,
         NEXT_PUBLIC_AUTH_PROVIDERS: [
+            source.NEXT_PUBLIC_AUTH_PROVIDERS[anonymous] ? anonymous : null,
             source.NEXT_PUBLIC_AUTH_PROVIDERS[email] ? email : null,
             source.NEXT_PUBLIC_AUTH_PROVIDERS[facebook] ? facebook : null,
             source.NEXT_PUBLIC_AUTH_PROVIDERS[github] ? github : null,
@@ -127,6 +131,7 @@ export const WebServer: NextPage = () => {
         NEXT_PUBLIC_API_HTTP: '',
         NEXT_PUBLIC_API_WS: '',
         NEXT_PUBLIC_AUTH_PROVIDERS: {
+            anonymous: false,
             email: false,
             google: false,
             facebook: false,
@@ -284,6 +289,16 @@ ${key}=${value}`;
                         }}
                     >
                         電話番号
+                    </Checkbox>
+                    <Checkbox
+                        value={configState.NEXT_PUBLIC_AUTH_PROVIDERS.anonymous}
+                        onChange={e => {
+                            setConfigStateWithImmer(configState => {
+                                configState.NEXT_PUBLIC_AUTH_PROVIDERS.anonymous = e.target.checked;
+                            });
+                        }}
+                    >
+                        匿名
                     </Checkbox>
                     <Checkbox
                         value={configState.NEXT_PUBLIC_AUTH_PROVIDERS.google}
