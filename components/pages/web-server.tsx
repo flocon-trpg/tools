@@ -86,26 +86,28 @@ type ToStringValue<T> = {
 type Config = ToStringValue<ConfigState>;
 
 const toConfig = (source: ConfigState): Config => {
+    const authProviders = [
+        source.NEXT_PUBLIC_AUTH_PROVIDERS[anonymous] ? anonymous : null,
+        source.NEXT_PUBLIC_AUTH_PROVIDERS[email] ? email : null,
+        source.NEXT_PUBLIC_AUTH_PROVIDERS[facebook] ? facebook : null,
+        source.NEXT_PUBLIC_AUTH_PROVIDERS[github] ? github : null,
+        source.NEXT_PUBLIC_AUTH_PROVIDERS[google] ? google : null,
+        source.NEXT_PUBLIC_AUTH_PROVIDERS[phone] ? phone : null,
+        source.NEXT_PUBLIC_AUTH_PROVIDERS[twitter] ? twitter : null,
+    ].reduce<string>((seed, elem) => {
+        if (elem == null) {
+            return seed;
+        }
+        if (seed === '') {
+            return elem;
+        }
+        return `${seed},${elem}`;
+    }, '');
+
     return {
         NEXT_PUBLIC_API_HTTP: source.NEXT_PUBLIC_API_HTTP,
         NEXT_PUBLIC_API_WS: source.NEXT_PUBLIC_API_WS,
-        NEXT_PUBLIC_AUTH_PROVIDERS: [
-            source.NEXT_PUBLIC_AUTH_PROVIDERS[anonymous] ? anonymous : null,
-            source.NEXT_PUBLIC_AUTH_PROVIDERS[email] ? email : null,
-            source.NEXT_PUBLIC_AUTH_PROVIDERS[facebook] ? facebook : null,
-            source.NEXT_PUBLIC_AUTH_PROVIDERS[github] ? github : null,
-            source.NEXT_PUBLIC_AUTH_PROVIDERS[google] ? google : null,
-            source.NEXT_PUBLIC_AUTH_PROVIDERS[phone] ? phone : null,
-            source.NEXT_PUBLIC_AUTH_PROVIDERS[twitter] ? twitter : null,
-        ].reduce<string>((seed, elem) => {
-            if (elem == null) {
-                return seed;
-            }
-            if (seed === '') {
-                return elem;
-            }
-            return `${seed},${elem}`;
-        }, ''),
+        NEXT_PUBLIC_AUTH_PROVIDERS: authProviders === '' ? undefined : authProviders,
         NEXT_PUBLIC_FIREBASE_STORAGE_ENABLED: source.NEXT_PUBLIC_FIREBASE_STORAGE_ENABLED
             ? 'true'
             : undefined,
@@ -193,6 +195,10 @@ ${key}=${value}`;
     return (
         <div style={{ display: 'flex', flexDirection: 'column', padding: 8 }}>
             <div>
+                <p>
+                    Webサーバー
+                    v0.7.2以降に対応しています。それより前のバージョンには対応していません。
+                </p>
                 <h1>使い方</h1>
                 <ol>
                     <li>左半分のエリアで値を編集します。</li>
@@ -262,111 +268,6 @@ ${key}=${value}`;
                                     width={400}
                                     src="/assets/firebase-config.png"
                                     alt="Firebase構成オブジェクト"
-                                    preview={{ mask: '拡大する' }}
-                                />
-                            </div>
-                        </Collapse.Panel>
-                    </Collapse>
-                    <h2 style={{ paddingTop: headerPadding }}>
-                        Firebase Authenticationで有効化したログインプロバイダ
-                    </h2>
-                    <Checkbox
-                        value={configState.NEXT_PUBLIC_AUTH_PROVIDERS.email}
-                        onChange={e => {
-                            setConfigStateWithImmer(configState => {
-                                configState.NEXT_PUBLIC_AUTH_PROVIDERS.email = e.target.checked;
-                            });
-                        }}
-                    >
-                        メール/パスワード
-                    </Checkbox>
-                    <Checkbox
-                        value={configState.NEXT_PUBLIC_AUTH_PROVIDERS.phone}
-                        onChange={e => {
-                            setConfigStateWithImmer(configState => {
-                                configState.NEXT_PUBLIC_AUTH_PROVIDERS.phone = e.target.checked;
-                            });
-                        }}
-                    >
-                        電話番号
-                    </Checkbox>
-                    <Checkbox
-                        value={configState.NEXT_PUBLIC_AUTH_PROVIDERS.anonymous}
-                        onChange={e => {
-                            setConfigStateWithImmer(configState => {
-                                configState.NEXT_PUBLIC_AUTH_PROVIDERS.anonymous = e.target.checked;
-                            });
-                        }}
-                    >
-                        匿名
-                    </Checkbox>
-                    <Checkbox
-                        value={configState.NEXT_PUBLIC_AUTH_PROVIDERS.google}
-                        onChange={e => {
-                            setConfigStateWithImmer(configState => {
-                                configState.NEXT_PUBLIC_AUTH_PROVIDERS.google = e.target.checked;
-                            });
-                        }}
-                    >
-                        Google
-                    </Checkbox>
-                    <Checkbox
-                        value={configState.NEXT_PUBLIC_AUTH_PROVIDERS.facebook}
-                        onChange={e => {
-                            setConfigStateWithImmer(configState => {
-                                configState.NEXT_PUBLIC_AUTH_PROVIDERS.facebook = e.target.checked;
-                            });
-                        }}
-                    >
-                        Facebook
-                    </Checkbox>
-                    <Checkbox
-                        value={configState.NEXT_PUBLIC_AUTH_PROVIDERS.twitter}
-                        onChange={e => {
-                            setConfigStateWithImmer(configState => {
-                                configState.NEXT_PUBLIC_AUTH_PROVIDERS.twitter = e.target.checked;
-                            });
-                        }}
-                    >
-                        Twitter
-                    </Checkbox>
-                    <Checkbox
-                        value={configState.NEXT_PUBLIC_AUTH_PROVIDERS.github}
-                        onChange={e => {
-                            setConfigStateWithImmer(configState => {
-                                configState.NEXT_PUBLIC_AUTH_PROVIDERS.github = e.target.checked;
-                            });
-                        }}
-                    >
-                        GitHub
-                    </Checkbox>
-                    {AuthProviders.isEmpty(configState.NEXT_PUBLIC_AUTH_PROVIDERS) && (
-                        <Alert
-                            showIcon
-                            type="error"
-                            message="少なくとも1つにチェックを入れる必要があります。もしログインプロバイダを1つも有効化していない場合は、Firebaseの管理画面にアクセスして少なくとも1つを有効化してください。"
-                        />
-                    )}
-                    <Collapse style={{ marginTop: collapsePadding }}>
-                        <Collapse.Panel header="有効化したログインプロバイダを確認する方法" key="1">
-                            <div>
-                                <div>
-                                    有効化したログインプロバイダは、Firebase
-                                    Authenticationの管理画面から参照できます。公式ドキュメントに従ってサーバーをセットアップしている場合は、おそらく下の画像のようになっていると思います。この画像では「メール/パスワード」と「Google」が有効化されています。
-                                </div>
-                                <Image
-                                    width={400}
-                                    src="/assets/firebase-auth-2.png"
-                                    alt="ログインプロバイダの画像1"
-                                    preview={{ mask: '拡大する' }}
-                                />
-                                <div>
-                                    ログインプロバイダを1つも有効化していない場合は、下の画像のようになります。この場合は少なくとも1つを有効化してください。
-                                </div>
-                                <Image
-                                    width={400}
-                                    src="/assets/firebase-auth-1.png"
-                                    alt="ログインプロバイダの画像2"
                                     preview={{ mask: '拡大する' }}
                                 />
                             </div>
@@ -447,6 +348,108 @@ ${key}=${value}`;
                     >
                         有効化する
                     </Checkbox>
+                    <h2 style={{ paddingTop: headerPadding }}>
+                        ブラウザで表示させるFirebase Authenticationのログインプロバイダ（任意）
+                    </h2>
+                    <p>この設定は任意です。全てのチェックボックスを空にしたままでも構いません。</p>
+                    <p>
+                        チェックが入っていないログインプロバイダは、Floconのログイン画面において非表示になります。ただし全てのチェックボックスが空の場合は、全てのログインプロバイダが表示されます。
+                    </p>
+                    <Checkbox
+                        value={configState.NEXT_PUBLIC_AUTH_PROVIDERS.email}
+                        onChange={e => {
+                            setConfigStateWithImmer(configState => {
+                                configState.NEXT_PUBLIC_AUTH_PROVIDERS.email = e.target.checked;
+                            });
+                        }}
+                    >
+                        メール/パスワード
+                    </Checkbox>
+                    <Checkbox
+                        value={configState.NEXT_PUBLIC_AUTH_PROVIDERS.phone}
+                        onChange={e => {
+                            setConfigStateWithImmer(configState => {
+                                configState.NEXT_PUBLIC_AUTH_PROVIDERS.phone = e.target.checked;
+                            });
+                        }}
+                    >
+                        電話番号
+                    </Checkbox>
+                    <Checkbox
+                        value={configState.NEXT_PUBLIC_AUTH_PROVIDERS.anonymous}
+                        onChange={e => {
+                            setConfigStateWithImmer(configState => {
+                                configState.NEXT_PUBLIC_AUTH_PROVIDERS.anonymous = e.target.checked;
+                            });
+                        }}
+                    >
+                        匿名
+                    </Checkbox>
+                    <Checkbox
+                        value={configState.NEXT_PUBLIC_AUTH_PROVIDERS.google}
+                        onChange={e => {
+                            setConfigStateWithImmer(configState => {
+                                configState.NEXT_PUBLIC_AUTH_PROVIDERS.google = e.target.checked;
+                            });
+                        }}
+                    >
+                        Google
+                    </Checkbox>
+                    <Checkbox
+                        value={configState.NEXT_PUBLIC_AUTH_PROVIDERS.facebook}
+                        onChange={e => {
+                            setConfigStateWithImmer(configState => {
+                                configState.NEXT_PUBLIC_AUTH_PROVIDERS.facebook = e.target.checked;
+                            });
+                        }}
+                    >
+                        Facebook
+                    </Checkbox>
+                    <Checkbox
+                        value={configState.NEXT_PUBLIC_AUTH_PROVIDERS.twitter}
+                        onChange={e => {
+                            setConfigStateWithImmer(configState => {
+                                configState.NEXT_PUBLIC_AUTH_PROVIDERS.twitter = e.target.checked;
+                            });
+                        }}
+                    >
+                        Twitter
+                    </Checkbox>
+                    <Checkbox
+                        value={configState.NEXT_PUBLIC_AUTH_PROVIDERS.github}
+                        onChange={e => {
+                            setConfigStateWithImmer(configState => {
+                                configState.NEXT_PUBLIC_AUTH_PROVIDERS.github = e.target.checked;
+                            });
+                        }}
+                    >
+                        GitHub
+                    </Checkbox>
+                    <Collapse style={{ marginTop: collapsePadding }}>
+                        <Collapse.Panel header="有効化したログインプロバイダを確認する方法" key="1">
+                            <div>
+                                <div>
+                                    有効化したログインプロバイダは、Firebase
+                                    Authenticationの管理画面から参照できます。公式ドキュメントに従ってサーバーをセットアップしている場合は、おそらく下の画像のようになっていると思います。この画像では「メール/パスワード」と「Google」が有効化されています。
+                                </div>
+                                <Image
+                                    width={400}
+                                    src="/assets/firebase-auth-2.png"
+                                    alt="ログインプロバイダの画像1"
+                                    preview={{ mask: '拡大する' }}
+                                />
+                                <div>
+                                    ログインプロバイダを1つも有効化していない場合は、下の画像のようになります。この場合は少なくとも1つを管理画面から有効化してください。
+                                </div>
+                                <Image
+                                    width={400}
+                                    src="/assets/firebase-auth-1.png"
+                                    alt="ログインプロバイダの画像2"
+                                    preview={{ mask: '拡大する' }}
+                                />
+                            </div>
+                        </Collapse.Panel>
+                    </Collapse>
                 </div>
                 <div style={{ padding: '0 24px', alignSelf: 'center', fontSize: 24 }}>{'⇒'}</div>
                 <div style={{ flex: 1 }}>
@@ -471,7 +474,7 @@ ${key}=${value}`;
                         {deployType === staticFiles ? (
                             <>
                                 {
-                                    'まず、下のテキストをコピーしてoutフォルダ内にあるenv.txtに貼り付けて保存してください。次に、そのenv.txtファイルが入っているoutフォルダの中身をすべてホスティングサイトにアップロードしてください（Netlifyのドラッグ＆ドロップによるデプロイを行う場合は、outフォルダをドラッグ＆ドロップしてください）。'
+                                    'env.txtの中身を、下に表示されているテキストに置き換えてください。'
                                 }
                                 <Input.TextArea
                                     style={{ resize: 'none', height: 300, marginTop: 24 }}
