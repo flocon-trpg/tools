@@ -127,6 +127,7 @@ const staticFiles = 'staticFiles';
 const nextjs = 'nextjs';
 const headerPadding = 16;
 const collapsePadding = 12;
+const spaceBetweenCollapseContent = 12;
 
 export const WebServer: NextPage = () => {
     const [configState, setConfigState] = useState<ConfigState>({
@@ -208,7 +209,9 @@ ${key}=${value}`;
             <div style={{ display: 'flex', flexDirection: 'row' }}>
                 <div style={{ flex: 1 }}>
                     <h2>Firebase構成オブジェクト</h2>
-                    <p>{'両端にある " の文字は含めずに入力してください。'}</p>
+                    <p>
+                        <strong>{'両端にある " の文字は含めずに入力してください。'}</strong>
+                    </p>
                     <Form labelCol={{ span: 6 }} wrapperCol={{ span: 18 }}>
                         {firebaseConfigKeys.map(key => {
                             const value = configState.NEXT_PUBLIC_FIREBASE_CONFIG[key];
@@ -259,18 +262,48 @@ ${key}=${value}`;
                         })}
                     </Form>
                     <Collapse style={{ marginTop: collapsePadding }}>
-                        <Collapse.Panel header="Firebase構成オブジェクトを確認する方法" key="1">
+                        <Collapse.Panel header="Firebase構成オブジェクトを参照する方法" key="2">
                             <div>
-                                <div>
-                                    Firebase構成オブジェクトは、Firebase管理画面から歯車アイコンをクリックして「プロジェクトの設定」を開き、下の画像の赤い四角形の部分から参照できます。
-                                </div>
-                                <Image
-                                    width={400}
-                                    src="/assets/firebase-config.png"
-                                    alt="Firebase構成オブジェクト"
-                                    preview={{ mask: '拡大する' }}
-                                />
+                                まず、Firebase管理画面から歯車アイコンをクリックして「プロジェクトの設定」を開きます。下の方にある、青い丸に白抜き文字で
+                                {'</>'}と書かれているボタンをクリックします。
                             </div>
+                            <Image
+                                width={400}
+                                src="/assets/firebase-config-2.png"
+                                alt="Firebase構成オブジェクト2"
+                                preview={{ mask: '拡大する' }}
+                            />
+                            <div style={{ paddingTop: spaceBetweenCollapseContent }}>
+                                サイトの説明に従って、「アプリのニックネーム」を入力して「アプリを登録」ボタンを押します。ご自身がわかりやすい名前で構わないと思います。
+                            </div>
+                            <Image
+                                width={400}
+                                src="/assets/firebase-config-3.png"
+                                alt="Firebase構成オブジェクト3"
+                                preview={{ mask: '拡大する' }}
+                            />
+                            <div style={{ paddingTop: spaceBetweenCollapseContent }}>
+                                下の画像のように「Firebase SDK
+                                の追加」画面が表示されますが、ここに表示されている内容は後から参照できますのでそのまま下のほうにある「コンソールに進む」ボタンを押してください。「npm
+                                install firebase」のコマンド等も実行する必要はありません。
+                            </div>
+                            <Image
+                                width={400}
+                                src="/assets/firebase-config-4.png"
+                                alt="Firebase構成オブジェクト4"
+                                preview={{ mask: '拡大する' }}
+                            />
+                            <div style={{ paddingTop: spaceBetweenCollapseContent }}>
+                                {
+                                    '下の画像の赤い四角形の部分にFirebase構成オブジェクトが作成されていますので、そこに表示されている内容を入力してください。「npm」「CDN」「構成」のうちどれを選択しても構いませんが、「構成」が一番わかりやすいかと思います。'
+                                }
+                            </div>
+                            <Image
+                                width={400}
+                                src="/assets/firebase-config-1.png"
+                                alt="Firebase構成オブジェクト1"
+                                preview={{ mask: '拡大する' }}
+                            />
                         </Collapse.Panel>
                     </Collapse>
                     <h2 style={{ paddingTop: headerPadding }}>APIサーバーのURL（http, https）</h2>
@@ -351,7 +384,11 @@ ${key}=${value}`;
                     <h2 style={{ paddingTop: headerPadding }}>
                         ブラウザで表示させるFirebase Authenticationのログインプロバイダ（任意）
                     </h2>
-                    <p>この設定は任意です。全てのチェックボックスを空にしたままでも構いません。</p>
+                    <p>
+                        <strong>
+                            この設定は任意です。全てのチェックボックスを空にしたままでも構いません。
+                        </strong>
+                    </p>
                     <p>
                         チェックが入っていないログインプロバイダは、Floconのログイン画面において非表示になります。ただし全てのチェックボックスが空の場合は、全てのログインプロバイダが表示されます。
                     </p>
