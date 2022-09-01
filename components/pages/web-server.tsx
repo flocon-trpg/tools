@@ -502,9 +502,12 @@ ${key}=${value}`;
                         >
                             <Space direction="vertical">
                                 <Radio value={staticFiles}>
-                                    静的ファイル（例: Netlifyのドラッグ＆ドロップによるデプロイ）
+                                    静的ファイルを用い、設定には<code>env.txt</code>を使用する（例:
+                                    Netlifyのドラッグ＆ドロップによるデプロイ）
                                 </Radio>
-                                <Radio value={nextjs}>Next.js（例: Vercel）</Radio>
+                                <Radio value={nextjs}>
+                                    Next.js に対応したホスティングサービス（例: Vercel）
+                                </Radio>
                             </Space>
                         </Radio.Group>
                         <h3 style={{ paddingTop: headerPadding }}>設定方法</h3>
@@ -521,7 +524,7 @@ ${key}=${value}`;
                             </>
                         ) : (
                             <>
-                                ホスティングサイトの設定画面を開き、次のように環境変数を設定してください。
+                                ホスティングサービスの設定画面を開き、次のように環境変数を設定してください。
                                 <Table
                                     columns={[
                                         { title: 'キー', dataIndex: 'key', key: 'key' },
