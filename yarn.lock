@@ -163,15 +163,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@flocon-trpg/tools@workspace:."
   dependencies:
-    "@types/node": ^14.0.0
+    "@types/node": 14.18.1
     "@types/react": 17.0.37
     antd: ^4.17.3
     eslint: 7.32.0
     eslint-config-next: 12.0.7
-    husky: ^7.0.4
+    husky: 7.0.4
     immer: ^9.0.7
     next: 12.0.7
-    prettier: ^2.5.1
+    prettier: 2.5.1
     react: 17.0.2
     react-dom: 17.0.2
     typescript: 4.5.4
@@ -450,7 +450,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.0.0":
+"@types/node@npm:14.18.1":
   version: 14.18.1
   resolution: "@types/node@npm:14.18.1"
   checksum: 4ad88c071792081a04069d7380aff855b8982bf3e064c7c9614c8dba69cafa0f50899950326429baa9ee7b2c5b4306ed7dca1411e209281aaea31809a40adbe4
@@ -2467,7 +2467,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"husky@npm:^7.0.4":
+"husky@npm:7.0.4":
   version: 7.0.4
   resolution: "husky@npm:7.0.4"
   bin:
@@ -3734,7 +3734,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.5.1":
+"prettier@npm:2.5.1":
   version: 2.5.1
   resolution: "prettier@npm:2.5.1"
   bin:
