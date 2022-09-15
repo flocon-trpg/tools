@@ -119,8 +119,13 @@ const isEmptyString = (value: string): boolean => {
     return value.trim() === '';
 };
 
+const isValidUrl = (value: string): boolean => {
+    return value.trim().startsWith('https://') || value.trim().startsWith('http://');
+};
+
 namespace ErrorMessages {
     export const mustNotBeEmpty = 'この値は必須です。';
+    export const notHttpProtocol = 'https:// もしくは http:// で始まる必要があります。';
 }
 
 const staticFiles = 'staticFiles';
@@ -310,13 +315,16 @@ ${key}=${value}`;
                     <Form>
                         <Form.Item
                             validateStatus={
-                                isEmptyString(configState.NEXT_PUBLIC_API_HTTP)
+                                isEmptyString(configState.NEXT_PUBLIC_API_HTTP) ||
+                                !isValidUrl(configState.NEXT_PUBLIC_API_HTTP)
                                     ? 'error'
                                     : undefined
                             }
                             help={
                                 isEmptyString(configState.NEXT_PUBLIC_API_HTTP)
                                     ? ErrorMessages.mustNotBeEmpty
+                                    : !isValidUrl(configState.NEXT_PUBLIC_API_HTTP)
+                                    ? ErrorMessages.notHttpProtocol
                                     : undefined
                             }
                         >
