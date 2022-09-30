@@ -21,7 +21,7 @@
         "react-use": "^17.4.0"
     },
     "devDependencies": {
-        "@types/bcryptjs": "^2.4.2",
+        "@types/bcryptjs": "2.4.2",
         "@types/node": "14.18.1",
         "@types/react": "17.0.37",
         "eslint": "7.32.0",
