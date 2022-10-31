@@ -174,7 +174,7 @@ __metadata:
   dependencies:
     "@types/bcryptjs": ^2.4.2
     "@types/node": 14.18.1
-    "@types/react": 17.0.37
+    "@types/react": 17.0.52
     antd: ^4.17.3
     bcryptjs: ^2.4.3
     eslint: 7.32.0
@@ -490,14 +490,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:17.0.37":
-  version: 17.0.37
-  resolution: "@types/react@npm:17.0.37"
+"@types/react@npm:17.0.52":
+  version: 17.0.52
+  resolution: "@types/react@npm:17.0.52"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: e68b0d59aa69577fc6a6d654b25d5d8408625498f4c483f160b557fac21e840f6e8807cbde93e9f039949b6d624a019b1990d18499c1d65aecf3605c25e30242
+  checksum: a51b98dd87838d161278fdf9dd78e6a4ff8c018f406d6647f77963e144fb52a8beee40c89fd0e7e840eaeaa8bd9fe2f34519410540b1a52d43a6f8b4d2fbce33
   languageName: node
   linkType: hard
 
