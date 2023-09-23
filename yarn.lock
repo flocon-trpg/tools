@@ -173,7 +173,7 @@ __metadata:
   resolution: "@flocon-trpg/tools@workspace:."
   dependencies:
     "@types/bcryptjs": ^2.4.2
-    "@types/node": 14.18.1
+    "@types/node": 14.18.63
     "@types/react": 17.0.37
     antd: ^4.17.3
     bcryptjs: ^2.4.3
@@ -476,10 +476,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:14.18.1":
-  version: 14.18.1
-  resolution: "@types/node@npm:14.18.1"
-  checksum: 4ad88c071792081a04069d7380aff855b8982bf3e064c7c9614c8dba69cafa0f50899950326429baa9ee7b2c5b4306ed7dca1411e209281aaea31809a40adbe4
+"@types/node@npm:14.18.63":
+  version: 14.18.63
+  resolution: "@types/node@npm:14.18.63"
+  checksum: be909061a54931778c71c49dc562586c32f909c4b6197e3d71e6dac726d8bd9fccb9f599c0df99f52742b68153712b5097c0f00cac4e279fa894b0ea6719a8fd
   languageName: node
   linkType: hard
 
